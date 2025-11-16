@@ -8,7 +8,7 @@ Demo Video
 ```bash
 cd Minglin
 npm install
-./node_modules/.bin/tsc -p tsconfig.json
+npm run build
 node dist/src/main.js
 ```
 
