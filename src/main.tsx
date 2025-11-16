@@ -14,8 +14,8 @@ process.stdout.write("\x1b[2J"); // clear screen
 
 const App = () => {
     const [selectedModel, setSelectedModel] = useState<model | null>({
-        name: "mistral:7b",
-        model: "mistral:7b",
+        name: "",
+        model: "",
         modified_at: "2021-01-01",
         size: 0,
         digest: "string",
@@ -69,10 +69,10 @@ const App = () => {
             <Box width="100%">
 				<Text color={'cyan'}>{MinglinAscii}</Text>
 			</Box>
-            <Box paddingX={1} paddingY={1} flexDirection='column'>
+            {selectedThread ? null :<Box paddingX={1} paddingY={1} flexDirection='column'>
                 <Text color={'cyan'}>Ctrl + n to create a new thread</Text>
                 <Text color={'cyan'}>Ctrl + d to delete a thread</Text>
-            </Box>
+            </Box>}
             
             {/* {selectedModel ? null : <ModelSelector setSelectedModel={setSelectedModel} />} */}
             {selectedThread ? null : <ThreadSelector setSelectedThread={setSelectedThread} />}
