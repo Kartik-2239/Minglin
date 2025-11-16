@@ -3,7 +3,7 @@
 Minglin is a simple terminal chat app for using ollama models
 
 Demo Video
-[![Watch the demo](assets/demo-thumbnail.png)](assets/demo.mp4)
+[![Watch the demo]](assets/demo.mp4)
 
 ```bash
 cd Minglin
