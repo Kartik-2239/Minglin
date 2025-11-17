@@ -49,15 +49,15 @@ const App = () => {
         });
     }, [selectedThread])
 
-    useEffect(()=>{
-        setSelectedThread({
-            thread_id: selectedThread?.thread_id ?? "",
-            model: selectedModel?.name ?? "",
-            created_at: selectedThread?.created_at ?? "",
-            updated_at: new Date().toISOString(),
-            messages: selectedThread?.messages ?? []
-        });
-    }, [selectedModel])
+    // useEffect(()=>{
+    //     setSelectedThread({
+    //         thread_id: selectedThread?.thread_id ?? "",
+    //         model: selectedModel?.name ?? "",
+    //         created_at: selectedThread?.created_at ?? "",
+    //         updated_at: new Date().toISOString(),
+    //         messages: selectedThread?.messages ?? []
+    //     });
+    // }, [selectedModel])
 
     useInput((input, key) => {
         if (key.meta && input == "i") {
