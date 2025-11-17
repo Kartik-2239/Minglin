@@ -49,6 +49,30 @@ const InputBox = ({ selectedModel, selectedThread, setSelectedThread }: { select
 		if (key.escape) {
 			setSelectedThread(null);
 		}
+		if (key.upArrow) {
+			const userMessages = messages.filter(m => m.role === 'user');
+			// if (value != "") {
+				const curMessage = userMessages.find(m => m.content === value);
+				// console.log('cur', curMessage);
+				// console.log('prev', userMessages[userMessages.indexOf(curMessage as chat2) - 1]);	
+				
+				setValue(userMessages[userMessages.indexOf(curMessage as chat2) + 1]?.content ?? '');
+			// }
+			// setValue(userMessages[userMessages.length - 1]?.content ?? '');
+		}
+		if (key.downArrow) {
+			const userMessages = messages.filter(m => m.role === 'user');
+			// if (value != "") {
+				const curMessage = userMessages.find(m => m.content === value);
+				// console.log('cur', curMessage);
+				// console.log('next', userMessages[userMessages.indexOf(curMessage as chat2) + 1]);	
+				
+				setValue(userMessages[userMessages.indexOf(curMessage as chat2) - 1]?.content ?? '');
+				
+			// }
+			// setValue(userMessages[userMessages.length - 1]?.content ?? '');
+
+		}
 	});
 
 	const handleResponse = async () => {
