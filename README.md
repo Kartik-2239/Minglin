@@ -3,8 +3,10 @@
 Minglin is a simple terminal chat app for using ollama models
 
 Demo Video
+
 ![Demo](assets/small.gif)
 
+Installation instruction
 ```bash
 cd Minglin
 npm install
