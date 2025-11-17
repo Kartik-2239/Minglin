@@ -51,7 +51,7 @@ const ThreadSelector = ({ setSelectedThread }: { setSelectedThread: React.Dispat
 
         }
         if (key.ctrl && input === "d") {
-            console.log("delete", threads[selectedIndex]);
+            // console.log("delete", threads[selectedIndex]);
             if (!threads[selectedIndex]) return;
             deleteThread(threads[selectedIndex].thread_id);
             setThreads(threads.filter(thread => thread.thread_id !== threads[selectedIndex]?.thread_id));

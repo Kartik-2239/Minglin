@@ -12,6 +12,7 @@ process.stdout.write("\x1b[2J"); // clear screen
 const InputBox = ({ selectedModel, selectedThread, setSelectedThread }: { selectedModel: model, selectedThread: thread, setSelectedThread: React.Dispatch<React.SetStateAction<thread | null>> }) => {
 	const [value, setValue] = useState('');
 	const [messages, setMessages] = useState<chat2[]>([]);
+
 	const [response, setResponse] = useState<string>('');
 	const [backgroundColor, setBackgroundColor] = useState<string>('red');
 	const [placeholder, setPlaceholder] = useState<string>('click enter to send.....');
@@ -51,27 +52,13 @@ const InputBox = ({ selectedModel, selectedThread, setSelectedThread }: { select
 		}
 		if (key.upArrow) {
 			const userMessages = messages.filter(m => m.role === 'user');
-			// if (value != "") {
-				const curMessage = userMessages.find(m => m.content === value);
-				// console.log('cur', curMessage);
-				// console.log('prev', userMessages[userMessages.indexOf(curMessage as chat2) - 1]);	
-				
-				setValue(userMessages[userMessages.indexOf(curMessage as chat2) + 1]?.content ?? '');
-			// }
-			// setValue(userMessages[userMessages.length - 1]?.content ?? '');
+			const curMessage = userMessages.find(m => m.content === value);
+			setValue(userMessages[userMessages.indexOf(curMessage as chat2) + 1]?.content ?? '');
 		}
 		if (key.downArrow) {
 			const userMessages = messages.filter(m => m.role === 'user');
-			// if (value != "") {
-				const curMessage = userMessages.find(m => m.content === value);
-				// console.log('cur', curMessage);
-				// console.log('next', userMessages[userMessages.indexOf(curMessage as chat2) + 1]);	
-				
-				setValue(userMessages[userMessages.indexOf(curMessage as chat2) - 1]?.content ?? '');
-				
-			// }
-			// setValue(userMessages[userMessages.length - 1]?.content ?? '');
-
+			const curMessage = userMessages.find(m => m.content === value);
+			setValue(userMessages[userMessages.indexOf(curMessage as chat2) - 1]?.content ?? '');
 		}
 	});
 
