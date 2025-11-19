@@ -13,6 +13,9 @@ const InputBox = ({ selectedModel, selectedThread, setSelectedThread }: { select
 	const [value, setValue] = useState('');
 	const [messages, setMessages] = useState<chat2[]>([]);
 
+	const [sessionHistory, setSessionHistory] = useState<string[]>([]);
+	const [sessionHistoryIndex, setSessionHistoryIndex] = useState<number>(0);
+
 	const [response, setResponse] = useState<string>('');
 	const [backgroundColor, setBackgroundColor] = useState<string>('red');
 	const [placeholder, setPlaceholder] = useState<string>('click enter to send.....');
@@ -41,30 +44,42 @@ const InputBox = ({ selectedModel, selectedThread, setSelectedThread }: { select
 
 
 	useInput((input, key) => {
+		if (key.upArrow) {
+			if (sessionHistory.length === 0) return;
+			const newIndex = Math.max(0, sessionHistoryIndex - 1);
+			setSessionHistoryIndex(newIndex);
+			setValue(sessionHistory[newIndex] ?? '');
+			return;
+		}
+		if (key.downArrow) {
+			if (sessionHistory.length === 0) return;
+			const newIndex = Math.min(sessionHistory.length, sessionHistoryIndex + 1);
+			setSessionHistoryIndex(newIndex);
+			setValue(newIndex === sessionHistory.length ? '' : (sessionHistory[newIndex] ?? ''));
+			return;
+		}
 		if (key.return) {
 			if (responding) return;
 			handleResponse();
 			setPlaceholder('click enter to send.....');
 			setValue('');
+			setSessionHistoryIndex(sessionHistory.length + 1);
+			return;
 		}
 		if (key.escape) {
 			setSelectedThread(null);
-		}
-		if (key.upArrow) {
-			const userMessages = messages.filter(m => m.role === 'user');
-			const curMessage = userMessages.find(m => m.content === value);
-			setValue(userMessages[userMessages.indexOf(curMessage as chat2) + 1]?.content ?? '');
-		}
-		if (key.downArrow) {
-			const userMessages = messages.filter(m => m.role === 'user');
-			const curMessage = userMessages.find(m => m.content === value);
-			setValue(userMessages[userMessages.indexOf(curMessage as chat2) - 1]?.content ?? '');
+			return;
 		}
 	});
 
 	const handleResponse = async () => {
 		if (value.trim() === '') return;
 		const submitted = value;
+		setSessionHistory(prev => {
+			const next = [...prev, submitted];
+			setSessionHistoryIndex(next.length);
+			return next;
+		});
 		const userNanoid = nanoid(7);
 		setMessages(prev => [...prev, { role: 'user', content: submitted, chat_id: userNanoid, total_duration: 0, load_duration: 0, prompt_eval_count: 0, prompt_eval_duration: 0, eval_count: 0, eval_duration: 0 }]);
 		const chatsForApi: chat2[] = [...messages, { role: 'user', content: submitted, chat_id: userNanoid, total_duration: 0, load_duration: 0, prompt_eval_count: 0, prompt_eval_duration: 0, eval_count: 0, eval_duration: 0 }];
